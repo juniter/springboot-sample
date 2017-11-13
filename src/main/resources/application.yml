@@ -1,0 +1,30 @@
+server:
+  port: 8089
+  address: www.jsample.com
+spring:
+  datasource:
+    schema: classpath:import.sql
+    schema-username: root
+    schema-password: 123456
+    url: jdbc:mysql://localhost:3306/sample?useSSL=false&characterEncoding=UTF-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  freemarker:
+    enabled: true
+    cache: true
+    charset: UTF-8
+    suffix: .ftl
+mybatis:
+  config-location: classpath:mybatis-config.xml
+logging:
+  level:
+    root: INFO
+    com:
+      mtk:
+        demo:
+          mybatis:
+            mapper: TRACE
+# customer config
+juniter:
+  email: juniterr@outlook.com

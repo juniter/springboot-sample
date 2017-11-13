@@ -1,0 +1,12 @@
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.juniter.sample.model"/>
+    </typeAliases>
+    <mappers>
+        <mapper resource="com/mtk/demo/mybatis/mapper/CityMapper.xml"/>
+        <mapper resource="com/mtk/demo/mybatis/mapper/HotelMapper.xml"/>
+    </mappers>
+</configuration>

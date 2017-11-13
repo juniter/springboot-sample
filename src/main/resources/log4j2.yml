@@ -1,0 +1,70 @@
+Configuration:
+  status: INFO
+  name: Log4j2 Yaml Config
+  properties:
+    property:
+    - name: ArchiveFileName
+      value: logs/archive/
+    - name: filename
+      value: logs/example
+  Appenders:
+    Console:
+      name: DefaultConsoleAppender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: |
+          %style{%date{DEFAULT}}{yellow}%highlight{%-5level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green}%message
+    File:
+    - name: HTTP_REQUEST_LOG
+      fileName: ${filename}-http.log
+      PatternLayout:
+        pattern: |
+          %date-%-5level-%message
+      Filters:
+        ThresholdFilter:
+          level: INFO
+    - name: DefaultFileAppender
+      fileName: ${filename}-all.log
+      PatternLayout:
+        pattern: |
+          %date-%-5level-%message
+      Filters:
+        ThresholdFilter:
+          level: INFO
+    - name: WarnningFileAppender
+      fileName: ${filename}-warn.log
+      PatternLayout:
+        pattern: |
+          %date-%-5level-%message
+      Filters:
+        ThresholdFilter:
+          level: WARN
+    RollingFile:
+    - name: ArchiveFileAppender
+      fileName: ${filename}-rolling.log
+      filePattern: ${ArchiveFileName}-%d{yyyy-MM-dd-HH}-%i.log.zip
+      PatternLayout:
+        pattern: '%d %p %c{1.} [%t] %m%n'
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: 10 MB
+        TimeBasedTriggeringPolicy:
+          interval: 1
+          modulate: true
+  Loggers:
+    Root:
+      level: INFO
+      AppenderRef:
+      - ref: DefaultConsoleAppender
+      - ref: DefaultFileAppender
+      - ref: WarnningFileAppender
+      - ref: ArchiveFileAppender
+    Logger:
+    - name: HTTP_REQUEST_LOGGER
+      level: INFO
+      additivity: true
+      AppenderRef:
+        ref: HTTP_REQUEST_LOG
+    - name: SYNC_FILE_LOGGER
+      level: WARN
+      additivity: true
