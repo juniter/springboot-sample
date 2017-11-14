@@ -6,7 +6,7 @@
         <package name="com.juniter.sample.model"/>
     </typeAliases>
     <mappers>
-        <mapper resource="com/mtk/demo/mybatis/mapper/CityMapper.xml"/>
-        <mapper resource="com/mtk/demo/mybatis/mapper/HotelMapper.xml"/>
+        <mapper resource="com/juniter/sample/mapper/CityMapper.xml"/>
+        <mapper resource="com/juniter/sample/mapper/HotelMapper.xml"/>
     </mappers>
 </configuration>

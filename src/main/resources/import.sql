@@ -14,17 +14,17 @@ IF EXISTS hotel;
 -- create table
 CREATE TABLE city (
 	id INT PRIMARY KEY auto_increment,
-	NAME VARCHAR,
-	state VARCHAR,
-	country VARCHAR
+	`NAME` VARCHAR(36),
+	state VARCHAR(36),
+	country VARCHAR(36)
 );
 
 CREATE TABLE hotel (
 	city INT,
-	NAME VARCHAR,
-	address VARCHAR,
+	`NAME` VARCHAR(36),
+	address VARCHAR(36),
 	-- zip 邮编
-	zip VARCHAR
+	zip VARCHAR(36)
 );
 
 INSERT INTO city (NAME, state, country)

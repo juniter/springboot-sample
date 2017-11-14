@@ -12,37 +12,48 @@ public class Hotel implements Serializable {
 	private String address;
 
 	private String zip;
+	
+	public Hotel() {
+		this.city = 2L;
+		this.name = "Seven Days Hotel";
+		this.address = "BeiJing-DaXing";
+		this.zip = "100010";
+	}
 
 	public Long getCity() {
 		return city;
 	}
 
-	public void setCity(Long city) {
+	public Hotel setCity(Long city) {
 		this.city = city;
+		return this;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public Hotel setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public Hotel setAddress(String address) {
 		this.address = address;
+		return this;
 	}
 
 	public String getZip() {
 		return zip;
 	}
 
-	public void setZip(String zip) {
+	public Hotel setZip(String zip) {
 		this.zip = zip;
+		return this;
 	}
 
 	@Override

@@ -1,8 +1,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mtk.demo.mybatis.mapper.HotelMapper">
+<mapper namespace="com.juniter.sample.mapper.HotelMapper">
     <select id="selectByCityId" resultType="Hotel">
         select * from hotel where city = #{id}
     </select>
+    
+    <insert id="addNewCity" parameterType="Hotel">
+    	insert into hotel (city ,`name` ,address, zip) values (#{city}, #{name} ,#{address} ,#{zip})
+    </insert>
 </mapper>

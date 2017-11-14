@@ -11,22 +11,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @WebFilter("/*")
 public class CrossDomainFilter implements Filter {
-	private static final Logger logger = LoggerFactory.getLogger("CrossDomainFilter");
-
 	@Override
 	public void destroy() {
 
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filter)
-			throws IOException, ServletException {
-		logger.info("Customer Filter SetHeader。。。。");
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filter) throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
 		res.addHeader("Access-Control-Allow-Origin", "*");
 		res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");

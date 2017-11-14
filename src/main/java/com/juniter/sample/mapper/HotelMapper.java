@@ -7,4 +7,5 @@ import com.juniter.sample.model.Hotel;
 @Mapper
 public interface HotelMapper {
 	Hotel selectByCityId(int city_id);
+	Integer addNewCity(Hotel hotel);
 }

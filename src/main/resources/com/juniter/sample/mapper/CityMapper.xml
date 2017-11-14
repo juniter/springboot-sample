@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mtk.demo.mybatis.mapper.CityMapper">
+<mapper namespace="com.juniter.sample.mapper.CityMapper">
     <select id="selectCityById" resultType="City">
         select * from city where id = #{id}
     </select>
