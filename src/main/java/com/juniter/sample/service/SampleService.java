@@ -19,12 +19,12 @@ public class SampleService extends SuperService {
 
 	public void sample() {
 		Integer result = this.doTransaction(this::batchInsert);
-		System.out.println("最后执行条数：" + result);
+		logger.error("最后执行条数：{}",result);
 	}
 	
 	public void sampleRollback() {
 		Integer result = this.doTransaction(this::batchInsert2);
-		System.out.println("最后执行条数：" + result);
+		logger.error("最后执行条数：{}",result);
 	}
 
 	public Integer batchInsert() {
