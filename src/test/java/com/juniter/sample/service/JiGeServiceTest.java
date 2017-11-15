@@ -8,23 +8,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SampleServiceTest {
+public class JiGeServiceTest {
+
 	@Autowired
-	private SampleService sampleService;
+	private JiGeService service;
 	
 	@Test
-	public void testSample() {
-		sampleService.sample();
-	}
-	
-	@Test
-	public void testSampleRollback() {
-		sampleService.sampleRollback();
-	}
-	
-	@Test
-	public void testThreadSample() {
-		sampleService.threadSample();
+	public void testToJiGe() {
+		service.toJiGe();
 	}
 
 }

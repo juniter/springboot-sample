@@ -10,6 +10,13 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
 
+/**
+ * 
+ * 提供事务处理方法
+ * 
+ * @author Juniter
+ *
+ */
 public class SuperService {
 	protected static final Logger logger = LoggerFactory.getLogger(SuperService.class.getName());
 	private final TransactionTemplate transactionTemplate;
@@ -21,14 +28,14 @@ public class SuperService {
 		this.transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
 	}
 
-	protected <T> T doTransaction(final TransactionExecuter<T> executer) {
+	protected <T> T doTransaction(final TransactionExecuter<T> executer,Object...o) {
 		return transactionTemplate.execute(new TransactionCallback<T>() {
 
 			@Override
 			public T doInTransaction(TransactionStatus status) {
 				T t = null;
 				try {
-					t = executer.doTransaction();
+					t = executer.doTransaction(o);
 				} catch (Exception e) {
 					status.setRollbackOnly();
 					logger.error(e.getMessage());
@@ -39,13 +46,13 @@ public class SuperService {
 		});
 	}
 
-	protected <T> void doTransactionWithoutResult(final TransactionExecuter<T> executer) {
+	protected <T> void doTransactionWithoutResult(final TransactionExecuter<T> executer,Object...o) {
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				try {
-					executer.doTransaction();
+					executer.doTransaction(o);
 				} catch (Exception e) {
 					status.setRollbackOnly();
 					logger.error(e.getMessage());

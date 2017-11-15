@@ -7,10 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import com.juniter.sample.SpringBootApplicationSample;
 import com.juniter.sample.model.Hotel;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT ,classes = SpringBootApplicationSample.class)
 public class HotelMapperTest {
 
 	@Autowired

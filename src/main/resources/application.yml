@@ -17,12 +17,5 @@ spring:
     suffix: .ftl
 mybatis:
   config-location: classpath:mybatis-config.xml
-logging:
-  level:
-    root: INFO
-    com:
-      juniter:
-        sample:
-          mapper: TRACE
 juniter:
   email: juniterr@outlook.com

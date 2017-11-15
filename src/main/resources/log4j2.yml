@@ -8,18 +8,25 @@ Configuration:
     - name: filename
       value: logs/example
   Appenders:
+    # 日志打印到Console
     Console:
-      name: DefaultConsoleAppender
+    - name: DefaultConsoleAppender
       target: SYSTEM_OUT
       PatternLayout:
         pattern: |
           %highlight{%d [%t] %-5level: %msg%throwable}
+    - name: TraceDataAccessAction
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: |
+          %highlight{%d [%t] %-5level: %msg%throwable}
+     # 日志记录到文件
     File:
     - name: HTTP_REQUEST_LOG
       fileName: ${filename}-http.log
       PatternLayout:
         pattern: |
-          %date-%-5level-%message
+          %date-%-5level-%msg
       Filters:
         ThresholdFilter:
           level: INFO
@@ -27,7 +34,7 @@ Configuration:
       fileName: ${filename}-all.log
       PatternLayout:
         pattern: |
-          %date-%-5level-%message
+          %date-%-5level-%msg
       Filters:
         ThresholdFilter:
           level: INFO
@@ -35,10 +42,17 @@ Configuration:
       fileName: ${filename}-warn.log
       PatternLayout:
         pattern: |
-          %date-%-5level-%message
+          %date-%-5level-%msg
       Filters:
         ThresholdFilter:
           level: WARN
+    - name: JSONSync
+      fileName: ${filename}-json.json
+      JSONLayout:
+        charset: GBK
+        compact: false
+        complete: true
+        eventEol: true
     RollingFile:
     - name: ArchiveFileAppender
       fileName: ${filename}-rolling.log
@@ -57,14 +71,21 @@ Configuration:
       AppenderRef:
       - ref: DefaultConsoleAppender
       - ref: DefaultFileAppender
-      - ref: WarnningFileAppender
-      - ref: ArchiveFileAppender
     Logger:
+    - name: com.juniter.sample.service
+      level: TRACE
+      AppenderRef:
+       ref: JSONSync
     - name: HTTP_REQUEST_LOGGER
       level: INFO
       additivity: true
       AppenderRef:
         ref: HTTP_REQUEST_LOG
-    - name: SYNC_FILE_LOGGER
+    - name: WARN_FILE_LOGGER
       level: WARN
       additivity: true
+    - name: com.juniter.sample.mapper
+      level: TRACE
+      AppenderRef:
+       ref: TraceDataAccessAction
+      
