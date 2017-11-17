@@ -1,9 +1,5 @@
 package com.juniter.sample.service;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -52,8 +48,8 @@ public class SampleService extends SuperService {
 		Integer count = 0;
 		for (int i = 0; i <= 10; i++) {
 			count += this.hotelMapper.addNewCity(new Hotel().setZip("100010"+i));
-			/*if (i>6)
-				throw new Exception("测试事物回滚机制");*/
+			if (i>6)
+				throw new Exception("测试事物回滚机制");
 		}
 		return count;
 	}

@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.juniter.sample.conf.SampleConfigure;
 import com.juniter.sample.dao.CityDao;
@@ -13,6 +14,7 @@ import com.juniter.sample.mapper.HotelMapper;
 @ServletComponentScan(basePackages = "com.juniter.sample.filter")
 @EnableConfigurationProperties(SampleConfigure.class)
 @SpringBootApplication
+@EnableTransactionManagement
 public class SpringBootApplicationSample implements CommandLineRunner{
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootApplicationSample.class, args);

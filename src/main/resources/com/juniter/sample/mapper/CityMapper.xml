@@ -2,7 +2,35 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.juniter.sample.mapper.CityMapper">
-    <select id="selectCityById" resultType="City">
-        select * from city where id = #{id}
-    </select>
+
+	<select id="selectCityById" resultType="City">
+		SELECT
+			* 
+		FROM city WHERE 
+			id = #{id}
+	</select>
+
+	<select id="getCityById" resultType="City">
+		SELECT
+			* 
+		FROM city WHERE 
+			id = #{id}
+	</select>
+
+	<update id="updateCityById" parameterType="City">
+		UPDATE city SET
+			`name` = #{name},
+			state = #{state},
+			`country` = #{country}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<insert id = "addNewCity" parameterType="City">
+		INSERT INTO city
+			(`name`, state, country)
+		VALUES
+			(#{name}, #{state}, #{country})
+	</insert>
+	
 </mapper>

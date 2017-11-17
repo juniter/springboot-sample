@@ -49,7 +49,6 @@ Configuration:
     - name: JSONSync
       fileName: ${filename}-json.json
       JSONLayout:
-        charset: GBK
         compact: false
         complete: true
         eventEol: true
@@ -71,6 +70,7 @@ Configuration:
       AppenderRef:
       - ref: DefaultConsoleAppender
       - ref: DefaultFileAppender
+      - ref: WarnningFileAppender
     Logger:
     - name: com.juniter.sample.service
       level: TRACE
