@@ -1,5 +1,10 @@
 package com.juniter.sample;
 
+import org.springframework.boot.SpringApplication;
+
+import com.juniter.sample.dao.CityDao;
+import com.juniter.sample.mapper.HotelMapper;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,29 +15,21 @@ import junit.framework.TestSuite;
 public class AppTest 
     extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+/*	public static void main(String[] args) {
+		SpringApplication.run(SpringBootApplicationSample.class, args);
+	}
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+	private final CityDao cityDao;
+	private final HotelMapper hotelMaper;
+	
+	public SpringBootApplicationSample(CityDao cityDao, HotelMapper hotelMaper) {
+		this.cityDao = cityDao;
+		this.hotelMaper = hotelMaper;
+	}
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println(this.cityDao.selectCityById(1));
+		System.out.println(this.hotelMaper.selectByCityId(1));
+	}*/
 }

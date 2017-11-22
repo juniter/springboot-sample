@@ -1,0 +1,60 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	background-image: url('/imgs/tim_bg_1.jpg');
+}
+
+.container-fluid {
+	height: 100%;
+}
+
+.im-header {
+	background-color: #09bbff;
+}
+
+.im-body {
+	padding-top: 2rem;
+}
+
+.im-message {
+	/*background-color: #0aacea;*/
+	background-color: #e6e6e6;
+	position: relative;
+	padding: .75rem 1.25rem;
+	margin:.25rem 0 0 0;
+	margin-bottom: 1rem;
+	border: 1px solid transparent;
+	border-radius: .7rem;
+	display: inline-block
+}
+
+.im-body-center-inner {
+	width: 100%;
+	height: 100%;
+}
+.im-body-center{
+	overflow:auto;
+	overflow-style:marquee,panner;
+}
+
+p {
+	display: inline;
+}
+
+.avatar {
+	padding-top: 1rem;
+}
+.im-body-left>div.card{
+	background-color:transparent;
+}
+#subme{
+	background-color:transparent;
+	border:1px solid rgba(0,0,0,.125);
+	color:rgba(0,0,0,.525)
+}
+#subme:hover{
+	border:1px solid rgba(0,0,0,.525);
+	color:rgba(0,0,0,.725)
+}
