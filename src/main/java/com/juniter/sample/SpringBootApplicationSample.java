@@ -7,7 +7,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 import com.juniter.sample.conf.SampleConfigure;
 
-@ServletComponentScan(basePackages = "com.juniter.sample.filter")
 @EnableConfigurationProperties(SampleConfigure.class)
 @SpringBootApplication
 public class SpringBootApplicationSample{

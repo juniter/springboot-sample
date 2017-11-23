@@ -49,12 +49,24 @@ p {
 .im-body-left>div.card{
 	background-color:transparent;
 }
-#subme{
+.cus-button{
 	background-color:transparent;
-	border:1px solid rgba(0,0,0,.125);
+	border:1px solid rgba(0,0,0,.125)!important;
 	color:rgba(0,0,0,.525)
 }
-#subme:hover{
+.cus-button:hover{
 	border:1px solid rgba(0,0,0,.525);
 	color:rgba(0,0,0,.725)
+}
+.modal-backdrop.show{
+	opacity: .05!important;
+}
+.modal-content{
+	background-color:transparent !important;
+}
+.modal-header{
+	border-bottom:0!important;
+}
+.modal-footer{
+	border-top:0!important;
 }

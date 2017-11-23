@@ -72,7 +72,7 @@ Configuration:
       - ref: DefaultFileAppender
       - ref: WarnningFileAppender
     Logger:
-    - name: com.juniter.sample.service
+    - name: org.springframework.http.converter
       level: TRACE
       AppenderRef:
        ref: JSONSync

@@ -18,7 +18,7 @@ import org.springframework.jms.core.JmsTemplate;
 @Component
 public class MessageDispatcher {
 
-	private static Map<String, Destination> pool = new HashMap<>();
+	public static final Map<String, Destination> pool = new HashMap<>();
 
 	@Autowired
 	private SampleConfigure sample;
@@ -30,7 +30,7 @@ public class MessageDispatcher {
 		Destination des = pool.get(msg.getTo());
 		if (des == null) {
 			String destinationStr = sample.getActivemq().getQueuePrefix() + msg.getTo();
-			des = msg.getType() == 1 ? new ActiveMQQueue(destinationStr) : new ActiveMQTopic(destinationStr);
+			des = msg.getTypeMsg() == 1 ? new ActiveMQQueue(destinationStr) : new ActiveMQTopic(destinationStr);
 			this.template.convertAndSend(des, msg.toJSON());
 			pool.put(msg.getTo(), des);
 		} else {

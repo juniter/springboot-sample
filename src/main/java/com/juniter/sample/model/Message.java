@@ -10,14 +10,18 @@ public class Message {
 	/**
 	 * 消息类型 1：p2p 2: p2group
 	 */
-	private int type;
+	private Integer typeMsg;
 	private String from;
 	private String to;
 	private String content;
 	private String nick;
-	
+
 	public String getDate() {
-		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM d',' yyyy h':'mm a'"));
+		return this.date;
+	}
+	
+	public void setDate(String date) {
+		this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM d',' yyyy h':'mm a"));
 	}
 
 	public String getFrom() {
@@ -55,16 +59,21 @@ public class Message {
 		return this;
 	}
 
-	public int getType() {
-		return type;
+	public Integer getTypeMsg() {
+		return typeMsg;
 	}
 
-	public Message setType(int type) {
-		this.type = type;
+	public Message setTypeMsg(Integer typeMsg) {
+		this.typeMsg = typeMsg;
 		return this;
 	}
 
 	public String toJSON() {
 		return new Gson().toJson(this);
 	}
+
+	public boolean valid() {
+		return this.typeMsg > 0 && this.from != this.to && this.to != null;
+	}
+
 }

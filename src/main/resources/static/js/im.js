@@ -1,5 +1,67 @@
 $(document).ready(function() {
+	$('#register').click(function() {
+		var identify = $('#identifyNumber').val();
+		var tips = $('#messageTips');
+		if (identify != null && identify != "") {
+			var nick = $('#nickName').val();
+			if (nick == null && nick == "")
+				tips.html('请填写昵称');
+			else {
+				setCookie(new Person(identify, nick))
+				remoteInit(identify);
+				init({
+					login : 'admin',
+					passcode : 'admin'
+				});
+				tips.html('已连接到服务器，现在可以开始会话');
+			}
+		} else {
+			tips.html('请填写标识码用以链接服务中心，标识码由字母和数字组成');
+		}
+		$('#messageModal').modal({
+			show : true,
+			keyboard : false
+		})
+	});
+
+	$('#send').click(function() {
+		var type = 0;
+		var from = getCookie('username');
+		var nick = getCookie('nick');
+		var sto = $('#sendTo').val();
+		var content = $('#msgarea').val();
+		if (sto != null && sto != "") {
+			if (sto == "ctg001")
+				type = 2;
+			else
+				type = 1;
+			send(from, sto, content, nick, type);
+		} else {
+			$('#messageTips').html('消息接收者不能为空');
+			$('#messageModal').modal({
+				show : true,
+				keyboard : false
+			})
+		}
+	});
 });
+
+function send(from, to, content, nick, type) {
+	$.ajax({
+		method:'POST',
+		url:'/send',
+		contentType: 'application/json;charset=utf-8',
+		data:JSON.stringify({
+			"typeMsg" : type,
+			"from" : from,
+			"to" : to,
+			"content" : content,
+			"nick" : nick,
+			"date": new Date()
+		})
+	})
+	
+}
 
 /**
  * 
@@ -9,7 +71,7 @@ $(document).ready(function() {
  * 
  */
 function appendMessage(msg, type, id) {
-	var message = nodeInstance(msg);
+	var message = nodeInstance(eval("("+msg+")"));
 	$(message).appendTo(type);
 	var div = document.getElementById(id);
 	var box = document.getElementById(id + "-box");
@@ -23,7 +85,7 @@ function nodeInstance(msg) {
         <div class='col-11'>\
         <div>\
         <span class='badge badge-light'>"
-			+ msg.from
+			+ msg.nick+"  "+msg.date
 			+ "</span>\
         </div>\
         <div class='im-message'>\
@@ -37,11 +99,7 @@ function nodeInstance(msg) {
 }
 
 window.onload = function() {
-	var header = {
-		login : 'admin',
-		passcode : 'admin'
-	};
-	// init(header);
+	checkCookie();
 }
 
 function init(header) {
@@ -49,8 +107,10 @@ function init(header) {
 	var client = Stomp.client(url);
 	client.heartbeat.outgoing = 20000;
 	client.heartbeat.incoming = 0;
+	var user = getCookie('username');
 	client.connect(header, function() {
-		var subId = client.subscribe('sample.quequ.jstest', function(message) {
+		// personal
+		var subId = client.subscribe('real.time.point'+user, function(message) {
 			if (message.body) {
 				appendMessage(message.body, ".im-body-center-inner", "p2p");
 			} else
@@ -78,8 +138,9 @@ function Person(username, nick) {
  * @returns
  */
 function setCookie(person) {
+	document.cookie = "";
 	document.cookie = "username=" + escape(person.username) + "&nick="
-			+ escape(person.nick);
+			+ escape(person.nick) + "&";
 }
 
 function getCookie(alias) {
@@ -89,22 +150,44 @@ function getCookie(alias) {
 			start = start + alias.length + 1;
 			end = document.cookie.indexOf("&", start);
 			if (end != -1)
-				end = document.cookie.length;
-			return unescape(document.cookie.substring(start, end))
+				return unescape(document.cookie.substring(start, end));
+			else
+				return null;
 		}
 	}
 	return null;
 }
 
 function checkCookie() {
+	var tips = $('#messageTips');
 	var username = getCookie('username');
-	if (username != null && username != "")
-		alert('Welcome again ' + username + '!')
-	else {
-		username = prompt('Please enter your name:', "")
-		if (username != null && username != "") {
-			setCookie(new Person('yj1771','杨浚凯'))
-		}
+	if (username != null && username != "") {
+		tips.html('欢迎回来~Mr. ' + username);
+		remoteInit(username);
+		init({
+			login : 'admin',
+			passcode : 'admin'
+		});
+	} else {
+		tips.html('请填写标识码和昵称用以链接服务中心，标识码由字母和数字组成');
 	}
+	$('#messageModal').modal({
+		show : true,
+		keyboard : false
+	})
+}
 
+function remoteInit(username) {
+	$.get('/init', {
+		identify : username
+	}, function(data) {
+		setUserList(eval(data));
+	});
+}
+
+function setUserList(users) {
+	var opts = "<option value='ctg001'>JavaChat</option>";
+	for (i in users)
+		opts += "<option value=" + users[i] + ">" + users[i] + "</option>";
+	$(opts).appendTo($('#sendTo'));
 }
