@@ -31,7 +31,7 @@ sample:
     stomp-port: 61614
     user: admin
     passcode: admin
-    topic-prefix: real.time.group
-    queue-prefix: real.time.point
+    topic-prefix: /topic/realtime/group/
+    queue-prefix: /queue/realtime/point/
   juniter:
     email: juniterr@outlook.com

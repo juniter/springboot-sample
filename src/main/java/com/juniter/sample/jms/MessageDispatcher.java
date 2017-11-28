@@ -29,7 +29,8 @@ public class MessageDispatcher {
 	public void send(Message msg) {
 		Destination des = pool.get(msg.getTo());
 		if (des == null) {
-			String destinationStr = sample.getActivemq().getQueuePrefix() + msg.getTo();
+			String destinationStr = (msg.getTypeMsg() == 1 ? sample.getActivemq().getQueuePrefix()
+					: sample.getActivemq().getTopicPrefix()) + msg.getTo();
 			des = msg.getTypeMsg() == 1 ? new ActiveMQQueue(destinationStr) : new ActiveMQTopic(destinationStr);
 			this.template.convertAndSend(des, msg.toJSON());
 			pool.put(msg.getTo(), des);

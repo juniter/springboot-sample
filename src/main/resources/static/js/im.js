@@ -36,6 +36,25 @@ $(document).ready(function() {
 			else
 				type = 1;
 			send(from, sto, content, nick, type);
+			if(type ==2)
+				appendMessage(JSON.stringify({
+					"typeMsg" : type,
+					"from" : from,
+					"to" : sto,
+					"content" : content,
+					"nick" : nick,
+					"date": new Date()
+				}),".im-body-center-inner-group", "p2g");
+			else
+				appendMessage(JSON.stringify({
+					"typeMsg" : type,
+					"from" : from,
+					"to" : sto,
+					"content" : content,
+					"nick" : nick,
+					"date": new Date()
+				}),".im-body-center-inner", "p2p");
+			
 		} else {
 			$('#messageTips').html('消息接收者不能为空');
 			$('#messageModal').modal({
@@ -79,23 +98,48 @@ function appendMessage(msg, type, id) {
 }
 
 function nodeInstance(msg) {
-	return "<div class='row'><div class='col-1'>\
-        <img src='/imgs/qq-a.png' alt='QQ' class='rounded-circle avatar'>\
-        </div>\
-        <div class='col-11'>\
-        <div>\
-        <span class='badge badge-light'>"
-			+ msg.nick+"  "+msg.date
-			+ "</span>\
-        </div>\
-        <div class='im-message'>\
-        <p>"
-			+ msg.content
-			+ "</p>\
-        </div>\
-        </div>\
-        </div>\
-        ";
+	var user =getCookie('username');
+	var nodeLeft = "<div class='row'>\
+						<div class='col-1'>\
+			        		<img src='/imgs/qq-a.png' alt='QQ' class='rounded-circle avatar'>\
+			        	</div>\
+			        	<div class='col-11'>\
+			        		<div class='float-left'>\
+							<div>\
+			        			<span class='badge badge-light'>"
+									+ msg.nick+"\t"+msg.date
+							 + "</span>\
+					        </div>\
+					        <div class='im-message'>\
+							 		<p>"
+									+ msg.content
+								+ "</p>\
+					        </div>\
+					       </div>\
+				        </div>\
+				    </div>\
+				   ";
+	var nodeRight =  "<div class='row'>\
+						<div class='col-11'>\
+						<div class='float-right'>\
+							<div>\
+								<span class='badge badge-light'>"
+									+ msg.nick+"\t"+msg.date
+							 + "</span>\
+					        </div>\
+					        <div class='im-message float-right'>\
+							 		<p>"
+									+ msg.content
+								+ "</p>\
+					        </div>\
+					    </div>\
+						</div>\
+						<div class='col-1'>\
+							<img src='/imgs/qq-a.png' alt='QQ' class='rounded-circle avatar'>\
+						</div>\
+					</div>\
+					";
+	return user ==msg.from?nodeRight:nodeLeft;
 }
 
 window.onload = function() {
@@ -103,19 +147,22 @@ window.onload = function() {
 }
 
 function init(header) {
-	var url = "ws://localhost:61614/stomp";
+	var url = "ws://192.168.0.35:61614/stomp";
 	var client = Stomp.client(url);
 	client.heartbeat.outgoing = 20000;
 	client.heartbeat.incoming = 0;
 	var user = getCookie('username');
 	client.connect(header, function() {
-		// personal
-		var subId = client.subscribe('real.time.point'+user, function(message) {
-			if (message.body) {
-				appendMessage(message.body, ".im-body-center-inner", "p2p");
-			} else
-				console.log('收到空消息');
+		
+		client.subscribe('/queue//queue/realtime/point/'+user, function(message) {
+			console.log(message.body)
+			appendMessage(message.body, ".im-body-center-inner", "p2p");
 		});
+		client.subscribe("/topic//topic/realtime/group/ctg001", function(message) {
+			console.log(message.body)
+			appendMessage(message.body, ".im-body-center-inner-group", "p2g");
+		});
+		
 	}, function() {
 		console.log("网络错误，无法链接到服务器");
 	});
@@ -186,6 +233,7 @@ function remoteInit(username) {
 }
 
 function setUserList(users) {
+	$('#sendTo>option').remove();
 	var opts = "<option value='ctg001'>JavaChat</option>";
 	for (i in users)
 		opts += "<option value=" + users[i] + ">" + users[i] + "</option>";
